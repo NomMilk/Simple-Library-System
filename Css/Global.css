@@ -41,9 +41,48 @@ button:hover
     background-color: var(--light-orange);
 }
 
-h1
+.Title
 {
-    text-align: center;
+    position: absolute;
+    top: 18vw;
+    right: 10vw;
+    font-size: 7vw;
+}
+
+.Description
+{
+    position: absolute;
+    top: 31vw;
+    right: 13vw;
+    font-size: 1vw;
+
+
+    overflow: hidden;
+    border-right: .15em solid var(--light-orange);
+    white-space: nowrap;
+    margin: 0 auto;
+
+    letter-spacing: .15em;
+
+    animation:
+        blink-caret 0.5s step-end infinite,
+        typing 12s steps(60, end) infinite;
+}
+
+@keyframes typing
+{
+    0% {width: 0}
+    5% {width: 0}
+    40% {width: 26%}
+    60% {width: 26%}
+    95% {width: 0}
+    100% {width: 0}
+}
+
+@keyframes blink-caret
+{
+    from, to { border-color: transparent }
+    50% { border-color: var(--light-orange); }
 }
 
 .Header
