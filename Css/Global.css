@@ -1,3 +1,52 @@
+@font-face
+{
+    font-family: 'Roboto';
+    src: url('/Roboto.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+:root
+{
+    /*
+    color pallete
+    https://lospec.com/palette-list/warm-summer
+    */
+    --black: #27201c;
+    --white: #fdf7d5;
+
+    --light-orange: #f2ce9a;
+}
+
 body
 {
+    color: var(--black);
+
+    background-color: var(--white);
+    font-family: Roboto;
+}
+
+button
+{
+    color: var(--black);
+
+    font-family: Roboto;
+
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+button:hover
+{
+    background-color: var(--light-orange);
+}
+
+h1
+{
+    text-align: center;
+}
+
+.Header
+{
+    margin: 0.4vw;
 }
