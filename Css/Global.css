@@ -16,10 +16,18 @@
     --white: #fdf7d5;
 
     --light-orange: #f2ce9a;
+    --gray: #7e6d59;
+    --brown: #a0563d;
 }
 
 body
 {
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    
+
     color: var(--black);
 
     background-color: var(--white);
@@ -41,10 +49,28 @@ button:hover
     background-color: var(--light-orange);
 }
 
+.Cube
+{
+    z-index: 1;
+    position: absolute;
+    width: 40vw;
+    height: 40vw;
+    background-color: var(--light-orange);
+    transition: transform 0.1s linear;
+    animation:
+        spin 20s linear infinite;
+}
+
+@keyframes spin
+{
+    0% {transform: rotate(0deg)}
+    100% {transform: rotate(360deg)}
+}
+
 .Title
 {
     position: absolute;
-    top: 18vw;
+    top: 11vw;
     right: 10vw;
     font-size: 7vw;
 }
@@ -52,13 +78,13 @@ button:hover
 .Description
 {
     position: absolute;
-    top: 31vw;
+    top: 24vw;
     right: 13vw;
     font-size: 1vw;
 
 
     overflow: hidden;
-    border-right: .15em solid var(--light-orange);
+    border-right: .15em solid var(--gray);
     white-space: nowrap;
     margin: 0 auto;
 
@@ -82,10 +108,11 @@ button:hover
 @keyframes blink-caret
 {
     from, to { border-color: transparent }
-    50% { border-color: var(--light-orange); }
+    50% { border-color: var(--gray); }
 }
 
 .Header
 {
-    margin: 0.4vw;
+    margin-left: 1vw;
+    margin-top: 0.4vw;
 }
