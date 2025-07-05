@@ -16,6 +16,7 @@
     --white: #fdf7d5;
 
     --light-orange: #f2ce9a;
+    --orange: #e2a25e;
     --gray: #7e6d59;
     --brown: #a0563d;
 }
@@ -33,6 +34,10 @@ body
     background-color: var(--white);
     font-family: Roboto;
 }
+img
+{
+    image-rendering: pixelated;
+}
 
 button
 {
@@ -49,9 +54,21 @@ button:hover
     background-color: var(--light-orange);
 }
 
-.Cube
+.BackCube
 {
     z-index: 1;
+    position: absolute;
+    width: 40vw;
+    height: 40vw;
+    background-color: var(--orange);
+    transition: transform 0.1s linear;
+    animation:
+        spin 240s linear infinite;
+}
+
+.Cube
+{
+    z-index: 2;
     position: absolute;
     width: 40vw;
     height: 40vw;
