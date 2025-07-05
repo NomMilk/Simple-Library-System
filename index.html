@@ -2,23 +2,45 @@
     <head>
         <title>LibraLink</title>
         <link rel="stylesheet" href="/Css/Global.css">
+        <link rel="stylesheet" href="/Css/SubTabs.css">
 
         <script src="/Scripts/MoveDownWhileScroll.js" defer></script>
     </head>
     <body>
         <div class = "Header">
-            <button>Browse Books</button>
-            <button>Borrow Books</button>
-            <button>Turn In Books</button>
+            <button onclick="scrollDown(1.2)">Browse Books</button>
+            <button onclick="scrollDown(2.2)">Borrow Books</button>
+            <button onclick="scrollDown(3.2)"">Turn In Books</button>
+
+            <script>
+            function scrollDown(_scroll){
+                const scrollAmount = window.innerHeight * _scroll;
+                window.scrollBy({
+                    top: scrollAmount,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            }
+            </script>
         </div>
         <div class = "Cube" style = "left: -10vw; bottom: -15vw;"></div>
-        <div class = "Cube" style = "left: 25vw; bottom: -25vw; animation-duration: 25s;"></div>
+        <div class = "Cube" style = "left: 25vw; bottom: -25vw; animation-duration: 200s;"></div>
         <div class = "Cube" style = "left: 55vw; bottom: -35vw; animation-direction: reverse;"></div>
-        <div class = "Cube" style = "left: 70vw; bottom: -35vw; animation-duration: 17s"></div>
+        <div class = "Cube" style = "left: 70vw; bottom: -35vw; animation-duration: 300s"></div>
         <!--background cube-->
-        <div class = "Cube" style = "bottom: -100vh; width:120vw; height:100vh; animation: none;"></div>
-
-        <h1 class = "Title Down">LibraLink</h1>
-        <h1 class = "Description Down">A simple library management system</h1>
+        <div class = "Cube" style = "bottom: -3800px; width:120vw; height: 3800px; animation: none;"></div>
+        <div class = "TitleScreen Down">
+            <h1 class = "Title Down">LibraLink</h1>
+            <h1 class = "Description Down">A simple library management system</h1>
+        </div>
+        <div class = "BrowseBooks">
+            <h1 class = "SmallTitle">Browse Books</h1>
+        </div>
+        <div class = "BorrowBooks">
+            <h1 class = "SmallTitle">Borrow Books</h1>
+        </div>
+        <div class = "TurnInBooks">
+            <h1 class = "SmallTitle">Turn In Books</h1>
+        </div>
     </body>
 </html>

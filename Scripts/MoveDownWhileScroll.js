@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const offset = parseFloat(computedTop) || 0;
 
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY * 1.2;
+      const scrollY = window.scrollY * 0.45;
       down.style.top = `${offset + scrollY}px`;
     });
   });
