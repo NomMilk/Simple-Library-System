@@ -11,19 +11,3 @@
     position: relative;
     font-size: 4vw;
 }
-
-.BorrowBooks
-{
-    z-index: 2;
-    position: absolute;
-    right: 10vw;
-    top: 220vh
-}
-
-.TurnInBooks
-{
-    z-index: 2;
-    position: absolute;
-    right: 10vw;
-    top: 320vh
-}
