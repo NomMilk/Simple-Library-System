@@ -34,9 +34,17 @@ body
     background-color: var(--white);
     font-family: Roboto;
 }
+
 img
 {
     image-rendering: pixelated;
+}
+
+input
+{
+    border: none;
+    font-family: Roboto;
+    font-size: 2vh;
 }
 
 button
@@ -128,7 +136,7 @@ button:hover
 @keyframes blink-caret
 {
     from, to { border-color: transparent }
-    50% { border-color: var(--gray); }
+    50% { border-color: var(--black); }
 }
 
 .Header

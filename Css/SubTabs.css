@@ -1,3 +1,9 @@
+.SmallTitle
+{
+    position: relative;
+    font-size: 4vw;
+}
+
 .BrowseBooks
 {
     z-index: 2;
@@ -6,8 +12,7 @@
     top: 120vh
 }
 
-.SmallTitle
+.BrowseDescription
 {
-    position: relative;
-    font-size: 4vw;
+    font-size: 2vh;
 }
