@@ -45,6 +45,14 @@ input
     border: none;
     font-family: Roboto;
     font-size: 2vh;
+
+    color: var(--black);
+
+    caret-color: var(--black);
+}
+
+input:focus {
+  outline: 3px solid var(--gray); /* adds a custom outline */
 }
 
 button
@@ -60,6 +68,11 @@ button
 button:hover
 {
     background-color: var(--light-orange);
+}
+
+.Colored:hover
+{
+    background-color: var(--gray);
 }
 
 .BackCube
