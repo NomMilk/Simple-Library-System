@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import pandas as pd
 import os
 import hashlib
 
 app = Flask(__name__)
+CORS(app)
 EXCEL_FILE = "users.xlsx"
 
 # if else to create the spreadsheet
@@ -50,6 +52,32 @@ def register():
         return jsonify({"message": "Account created successfully."}), 201
     except ValueError as e:
         return jsonify({"message": str(e)}), 400
+    except Exception as e:
+        return jsonify({"message": "Server error", "error": str(e)}), 500
+    
+#Flask route to handle post /login
+@app.route("/login", methods=["POST"])
+def login():
+    data = request.get_json()
+    try:
+        df = load_users()
+        hashed = hash_password(data["password"])
+        
+        user = df[(df["username"] == data["username"]) & (df["password"] == hashed)]
+
+        if user.empty:
+            raise ValueError("Invalid username or password.")
+
+        # Get user role
+        role = user.iloc[0]["role"]
+
+        return jsonify({
+            "message": f"Login successful. Welcome, {data['username']}!",
+            "role": role
+        }), 200
+
+    except ValueError as e:
+        return jsonify({"message": str(e)}), 401
     except Exception as e:
         return jsonify({"message": "Server error", "error": str(e)}), 500
 
