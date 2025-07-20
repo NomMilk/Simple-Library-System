@@ -1,0 +1,58 @@
+from flask import Flask, request, jsonify
+import pandas as pd
+import os
+import hashlib
+
+app = Flask(__name__)
+EXCEL_FILE = "users.xlsx"
+
+# if else to create the spreadsheet
+def init_user_file():
+    if not os.path.exists(EXCEL_FILE):
+        df = pd.DataFrame(columns=["username", "password", "email", "role"])
+        df.to_excel(EXCEL_FILE, index=False)
+
+# Hash passwords
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
+# Load current users from Excel
+def load_users():
+    return pd.read_excel(EXCEL_FILE)
+
+# Add new user
+def add_user(username, password, email, role="member"):
+    df = load_users()
+    if username in df["username"].values:
+        raise ValueError("Username already exists.")
+    
+    new_user = pd.DataFrame([{
+        "username": username,
+        "password": hash_password(password),
+        "email": email,
+        "role": role
+    }])
+    
+    df = pd.concat([df, new_user], ignore_index=True)
+    df.to_excel(EXCEL_FILE, index=False)
+
+# Flask route to handle POST /register
+@app.route("/register", methods=["POST"])
+def register():
+    data = request.get_json()
+    try:
+        add_user(
+            username=data["username"],
+            password=data["password"],
+            email=data["email"],
+            role=data.get("role", "member")
+        )
+        return jsonify({"message": "Account created successfully."}), 201
+    except ValueError as e:
+        return jsonify({"message": str(e)}), 400
+    except Exception as e:
+        return jsonify({"message": "Server error", "error": str(e)}), 500
+
+if __name__ == "__main__":
+    init_user_file()
+    app.run(debug=True)
