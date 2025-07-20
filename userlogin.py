@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 from flask_cors import CORS
 import pandas as pd
 import os
 import hashlib
+
 
 app = Flask(__name__)
 CORS(app)
@@ -68,18 +69,21 @@ def login():
         if user.empty:
             raise ValueError("Invalid username or password.")
 
-        # Get user role
-        role = user.iloc[0]["role"]
+        row = user.iloc[0]
+        session["username"] = row["username"]
+        session["role"] = row["role"]
+        session["email"] = row["email"]
 
         return jsonify({
-            "message": f"Login successful. Welcome, {data['username']}!",
-            "role": role
+            "message": f"Login successful. Welcome, {row['username']}!",
+            "role": row["role"]
         }), 200
 
     except ValueError as e:
         return jsonify({"message": str(e)}), 401
     except Exception as e:
         return jsonify({"message": "Server error", "error": str(e)}), 500
+
 
 if __name__ == "__main__":
     init_user_file()
