@@ -5,3 +5,15 @@ Hai-Duong To - QA and Documentation
 Homan Qiu - Front-end Developer
 Jerrel Durgin - Back-end Developer
 Sean Evasco - PM
+
+ The following Python packages are necessary to run this program:
+
+- Flask (`flask`)
+- Flask-CORS (`flask-cors`)
+- Pandas (`pandas`)
+- OpenPyXL (`openpyxl`)
+
+You can install everything at once with:
+
+```bash
+pip install -r requirements.txt
