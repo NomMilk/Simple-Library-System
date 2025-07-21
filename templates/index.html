@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>LibraLink</title>
+        <link rel="stylesheet" href="/Css/Global.css">
+        <link rel="stylesheet" href="/Css/SubTabs.css">
+
+        <script src="/Scripts/MoveDownWhileScroll.js" defer></script>
+    </head>
+    <body>
+        <div class = "Header">
+            <button onclick="scrollDown(1.2)">Browse Books</button>
+            <button onclick="scrollDown(2.2)">Sign In</button>
+
+            <script>
+            function scrollDown(_scroll){
+                const scrollAmount = window.innerHeight * _scroll;
+                window.scrollBy({
+                    top: scrollAmount,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            }
+            </script>
+        </div>
+        <img class = "DownFast"src="/Time.gif" style="z-index: -2; width: 30vw; position: absolute; left: 10vw; top: 2.5vw;">
+        <div class = "BackCube DownFast" style = "animation: none; left: 5vw; bottom: -25vh; transform:rotate(72deg)"></div>
+        <div class = "BackCube DownFast" style = "left: -20vw; bottom: -5vh; animation-duration: 400s; animation-direction: reverse;"></div>
+        <div class = "BackCube DownFast" style = "left: 20vw; bottom: -40vh; animation-direction: reverse;"></div>
+
+        <div class = "Cube" style = "left: -10vw; bottom: -15vw;"></div>
+        <div class = "Cube" style = "left: 25vw; bottom: -25vw; animation-duration: 200s;"></div>
+        <div class = "Cube" style = "left: 55vw; bottom: -35vw; animation-direction: reverse;"></div>
+        <div class = "Cube" style = "left: 70vw; bottom: -35vw; animation-duration: 300s;"></div>
+        <!--background cube-->
+        <div class = "Cube" style = "bottom: -2400px; width:120vw; height: 2400; animation: none;"></div>
+        <div class = "TitleScreen Down">
+            <h1 class = "Title Down">LibraLink</h1>
+            <h1 class = "Description Down">A simple library management system</h1>
+        </div>
+        <div class = "BrowseBooks">
+            <h1 class = "SmallTitle">Browse Books</h1>
+            <h2>Simply search for the book's availability</h2>
+        </div>
+        <div class = "Login">
+            <h1 class = "SmallTitle">Login</h1>
+            <!--Slop html-->
+            <h2 style = "position: absolute; left: 4vw;">Username:</h2>
+            <input style = "position: absolute; left: 12vw; bottom: -5.25vh"></input>
+            <h2 style = "position: absolute; left: 4vw; bottom: -20vh;">Password:</h2>
+            <input style = "position: absolute; left: 12vw; bottom: -17.8vh"></input>
+            <button class = "Colored" style = "position: absolute; left: 12vw; bottom: -26vh; width: 6.5vw">Sign In</button>
+            <button class = "Colored" style = "position: absolute; left: 12vw; bottom: -29vh; width: 6.5vw">Create Account</button>
+        </div>
+    </body>
+</html>

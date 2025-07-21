@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Book List</title>
+    <style>
+        table {
+            width: 90%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #333;
+            text-align: left;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Library Book Inventory</h1>
+    <table>r
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>ISBN</th>
+            <th>Year</th>
+            <th>In Stock</th>
+            <th>Who Checked</th>
+        </tr>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.Title }}</td>
+            <td>{{ book.Author }}</td>
+            <td>{{ book.Genre }}</td>
+            <td>{{ book.ISBN }}</td>
+            <td>{{ book.Year }}</td>
+            <td>{{ book["In Stock"] }}</td>
+            <td>{{ book["Who Checked"] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

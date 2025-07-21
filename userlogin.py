@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, session
+from flask import Flask, request, jsonify, session, render_template
 from flask_cors import CORS
 import pandas as pd
 import os
@@ -38,7 +38,17 @@ def add_user(username, password, email, role="member"):
     
     df = pd.concat([df, new_user], ignore_index=True)
     df.to_excel(EXCEL_FILE, index=False)
-
+#Flask route to handle book excel
+@app.route("/books")
+def show_books():
+    try:
+        df = pd.read_excel("BookList.xlsx")
+        books = df.to_dict(orient="records")
+        return render_template("books.html", books=books)
+    except Exception as e:
+        import traceback
+        traceback.print_exc()  # 🔍 Print full error to terminal
+        return f"Error loading books: {str(e)}", 500
 # Flask route to handle POST /register
 @app.route("/register", methods=["POST"])
 def register():
