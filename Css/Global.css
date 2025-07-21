@@ -70,6 +70,31 @@ button:hover
     background-color: var(--light-orange);
 }
 
+table
+{
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+th, td
+{
+    padding: 10px;
+    border: 1px solid #333;
+    text-align: left;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+h1 
+{
+    text-align: center;
+    margin-top: 2em;
+}
+
 .Colored:hover
 {
     background-color: var(--gray);

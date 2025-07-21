@@ -8,8 +8,17 @@
     </head>
     <body>
         <div class = "Header">
-            <button onclick="scrollDown(1.2)">Browse Books</button>
-            <button onclick="scrollDown(2.2)">Sign In</button>
+            <a href="/templates/books.html">
+                <button>Browse Books</button>
+            </a>
+
+            <a href="/templates/Sign_In.html">
+                <button>Sign In</button>
+            </a>
+
+            <a href="/templates/register.html">
+                <button>Register</button>
+            </a>
 
             <script>
             function scrollDown(_scroll){
@@ -32,24 +41,14 @@
         <div class = "Cube" style = "left: 55vw; bottom: -35vw; animation-direction: reverse;"></div>
         <div class = "Cube" style = "left: 70vw; bottom: -35vw; animation-duration: 300s;"></div>
         <!--background cube-->
-        <div class = "Cube" style = "bottom: -2400px; width:120vw; height: 2400; animation: none;"></div>
+        <div class = "Cube" style = "bottom: -1400px; width:120vw; height: 1400; animation: none;"></div>
         <div class = "TitleScreen Down">
             <h1 class = "Title Down">LibraLink</h1>
             <h1 class = "Description Down">A simple library management system</h1>
         </div>
         <div class = "BrowseBooks">
             <h1 class = "SmallTitle">Browse Books</h1>
-            <h2>Simply search for the book's availability</h2>
-        </div>
-        <div class = "Login">
-            <h1 class = "SmallTitle">Login</h1>
-            <!--Slop html-->
-            <h2 style = "position: absolute; left: 4vw;">Username:</h2>
-            <input style = "position: absolute; left: 12vw; bottom: -5.25vh"></input>
-            <h2 style = "position: absolute; left: 4vw; bottom: -20vh;">Password:</h2>
-            <input style = "position: absolute; left: 12vw; bottom: -17.8vh"></input>
-            <button class = "Colored" style = "position: absolute; left: 12vw; bottom: -26vh; width: 6.5vw">Sign In</button>
-            <button class = "Colored" style = "position: absolute; left: 12vw; bottom: -29vh; width: 6.5vw">Create Account</button>
+            <h2>Searching for books is as simple as being from a click away!</h2>
         </div>
     </body>
 </html>
