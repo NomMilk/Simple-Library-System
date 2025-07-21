@@ -21,12 +21,20 @@
     --brown: #a0563d;
 }
 
+html
+{
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar, body::-webkit-scrollbar-button { display: none; }
+
 body
 {
     height: 100%;
     margin: 0;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    -ms-overflow-style: none;
     
 
     color: var(--black);
