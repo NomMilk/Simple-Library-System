@@ -93,7 +93,74 @@ def login():
         return jsonify({"message": str(e)}), 401
     except Exception as e:
         return jsonify({"message": "Server error", "error": str(e)}), 500
+    #Flask route for book pages
+@app.route("/book/<isbn>")
+def book_detail(isbn):
+    try:
+        df = pd.read_excel("BookList.xlsx")
+        book = df[df["ISBN"].astype(str) == str(isbn)]
 
+        if book.empty:
+            return f"Book with ISBN {isbn} not found", 404
+
+        book_data = book.iloc[0].to_dict()
+        return render_template("book_detail.html", book=book_data)
+
+    except Exception as e:
+        return f"Error loading book: {str(e)}", 500
+@app.route("/request-book/<isbn>", methods=["POST"])
+def request_book(isbn):
+    if "username" not in session:
+        return "You must be logged in to request a book", 403
+
+    try:
+        # Load book data
+        df = pd.read_excel("BookList.xlsx")
+        book = df[df["ISBN"].astype(str) == str(isbn)]
+
+        if book.empty:
+            return f"Book with ISBN {isbn} not found", 404
+
+        book_title = book.iloc[0]["Title"]
+        requester = session["username"]
+
+        # Append to a requests Excel sheet
+        req_file = "BookRequests.xlsx"
+        if os.path.exists(req_file):
+            req_df = pd.read_excel(req_file)
+        else:
+            req_df = pd.DataFrame(columns=["username", "isbn", "title", "status"])
+
+        new_request = {
+            "username": requester,
+            "isbn": isbn,
+            "title": book_title,
+            "status": "Pending"
+        }
+
+        req_df = pd.concat([req_df, pd.DataFrame([new_request])], ignore_index=True)
+        req_df.to_excel(req_file, index=False)
+
+        return redirect(url_for('book_detail', isbn=isbn))
+
+    except Exception as e:
+        return f"Error processing request: {str(e)}", 500
+@app.route("/staff-dashboard")
+def staff_dashboard():
+    if session.get("role") != "staff":
+        return "Access denied", 403
+
+    # Load user accounts
+    users = pd.read_excel("users.xlsx").to_dict(orient="records")
+
+    # Load book requests
+    try:
+        requests_df = pd.read_excel("BookRequests.xlsx")
+        requests = requests_df.to_dict(orient="records")
+    except:
+        requests = []
+
+    return render_template("staff_dashboard.html", users=users, requests=requests)
 
 if __name__ == "__main__":
     init_user_file()

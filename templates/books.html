@@ -1,33 +1,118 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Library Book List</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='Css/Global.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='Css/SubTabs.css') }}">
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        th, td {
+            border: 1px solid #aaa;
+            padding: 8px;
+            text-align: left;
+        }
+        #searchBar {
+            width: 30%;
+            padding: 8px;
+            margin-top: 1em;
+        }
+        .controls {
+            margin-bottom: 1em;
+        }
+    </style>
 </head>
 <body>
     <h1>Library Book Inventory</h1>
-    <table>r
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Genre</th>
-            <th>ISBN</th>
-            <th>Year</th>
-            <th>In Stock</th>
-            <th>Who Checked</th>
-        </tr>
-        {% for book in books %}
-        <tr>
-            <td>{{ book.Title }}</td>
-            <td>{{ book.Author }}</td>
-            <td>{{ book.Genre }}</td>
-            <td>{{ book.ISBN }}</td>
-            <td>{{ book.Year }}</td>
-            <td>{{ book["In Stock"] }}</td>
-            <td>{{ book["Who Checked"] }}</td>
-        </tr>
-        {% endfor %}
+
+    <div class="controls">
+        <input type="text" id="searchBar" placeholder="Search by title or author...">
+
+        <label for="sortSelect">Sort by:</label>
+        <select id="sortSelect">
+            <option value="">-- Select --</option>
+            <option value="0">Title</option>
+            <option value="1">Author </option>
+            <option value="2">Genre</option>
+            <option value="3">ISBN</option>
+            <option value="4">Year</option>
+            <option value="5">In Stock</option>
+            <option value="6">Who Checked</option>
+        </select>
+    </div>
+
+    <table id="bookTable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author </th>
+                <th>Genre</th>
+                <th>ISBN</th>
+                <th>Year</th>
+                <th>In Stock</th>
+                <th>Who Checked</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('book_detail', isbn=book.ISBN) }}">
+                     {{ book.Title }}
+                    </a>
+                </td>
+
+                <td>{{ book.Author  }}</td>
+                <td>{{ book.Genre }}</td>
+                <td>{{ book.ISBN }}</td>
+                <td>{{ book.Year }}</td>
+                <td>{{ book["In Stock"] }}</td>
+                <td>{{ book["Who Checked"] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+
+    <script>
+        // Live search
+        // Dropdown sort
+document.getElementById("sortSelect").addEventListener("change", function () {
+    const colIndex = parseInt(this.value);
+    if (!isNaN(colIndex)) {
+        sortTable(colIndex);
+    }
+});
+
+function sortTable(colIndex) {
+    const tbody = document.querySelector("#bookTable tbody");
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+
+    let dir = "asc";
+
+    rows.sort((a, b) => {
+        const aText = a.cells[colIndex].textContent.trim().toLowerCase();
+        const bText = b.cells[colIndex].textContent.trim().toLowerCase();
+
+        if (!isNaN(aText) && !isNaN(bText)) {
+            return dir === "asc"
+                ? Number(aText) - Number(bText)
+                : Number(bText) - Number(aText);
+        } else {
+            return dir === "asc"
+                ? aText.localeCompare(bText)
+                : bText.localeCompare(aText);
+        }
+    });
+
+    // Re-attach sorted rows
+    rows.forEach(row => tbody.appendChild(row));
+}
+
+    </script>
 </body>
 </html>

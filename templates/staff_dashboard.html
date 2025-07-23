@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/Global.css') }}">
+</head>
+<body>
+    <h1>Welcome, {{ session['username'] }}</h1>
+
+    <h2>📚 Pending Book Requests</h2>
+    <table>
+        <tr>
+            <th>User</th><th>Title</th><th>ISBN</th><th>Status</th><th>Actions</th>
+        </tr>
+        {% for r in requests %}
+        <tr>
+            <td>{{ r.username }}</td>
+            <td>{{ r.title }}</td>
+            <td>{{ r.isbn }}</td>
+            <td>{{ r.status }}</td>
+            <td>
+                {% if r.status == 'Pending' %}
+                <form method="POST" action="{{ url_for('handle_request') }}">
+                    <input type="hidden" name="isbn" value="{{ r.isbn }}">
+                    <input type="hidden" name="username" value="{{ r.username }}">
+                    <button name="action" value="approve">✅ Approve</button>
+                    <button name="action" value="deny">❌ Deny</button>
+                </form>
+                {% else %}
+                {{ r.status }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>👤 User Accounts</h2>
+    <table>
+        <tr><th>Username</th><th>Email</th><th>Role</th></tr>
+        {% for u in users %}
+        <tr>
+            <td>{{ u.username }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.role }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
