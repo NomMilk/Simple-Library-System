@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, session, render_template
+from flask import Flask, request, jsonify, session, render_template, redirect, url_for
 from flask_cors import CORS
 import pandas as pd
 import os
@@ -44,10 +44,13 @@ def show_books():
     try:
         df = pd.read_excel("BookList.xlsx")
         books = df.to_dict(orient="records")
-        return render_template("books.html", books=books)
+
+        # Unique genres and years
+        genres = sorted(df["Genre"].dropna().unique())
+        years = sorted(df["Year"].dropna().unique())
+
+        return render_template("books.html", books=books, genres=genres, years=years)
     except Exception as e:
-        import traceback
-        traceback.print_exc()  # 🔍 Print full error to terminal
         return f"Error loading books: {str(e)}", 500
 # Flask route to handle POST /register
 @app.route("/register", methods=["POST"])
@@ -93,7 +96,7 @@ def login():
         return jsonify({"message": str(e)}), 401
     except Exception as e:
         return jsonify({"message": "Server error", "error": str(e)}), 500
-    #Flask route for book pages
+#Flask route for book pages
 @app.route("/book/<isbn>")
 def book_detail(isbn):
     try:
@@ -145,6 +148,7 @@ def request_book(isbn):
 
     except Exception as e:
         return f"Error processing request: {str(e)}", 500
+#Flask route to staff dashboard
 @app.route("/staff-dashboard")
 def staff_dashboard():
     if session.get("role") != "staff":
@@ -161,6 +165,18 @@ def staff_dashboard():
         requests = []
 
     return render_template("staff_dashboard.html", users=users, requests=requests)
+#Flask route to account page
+@app.route("/account")
+def account_page():
+    if "username" not in session:
+        return redirect(url_for("register_page"))
+    return render_template("account.html", 
+                           username=session["username"],
+                           email=session["email"],
+                           role=session["role"])
+@app.route("/register-page")
+def register_page():
+    return render_template("register.html")
 
 if __name__ == "__main__":
     init_user_file()

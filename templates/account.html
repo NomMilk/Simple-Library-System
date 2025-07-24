@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Account</title>
+</head>
+<body>
+    <h1>Welcome, {{ username }}!</h1>
+    <p>Email: {{ email }}</p>
+    <p>Role: {{ role }}</p>
+
+    {% if role == 'staff' %}
+        <p>You are a staff member.</p>
+        <a href="/staff-dashboard">Go to Staff Dashboard</a>
+    {% endif %}
+
+    <!-- Future: List of rented books, account settings, book extensions, etc. -->
+</body>
+</html>
