@@ -6,19 +6,24 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='Css/SubTabs.css') }}">
 </head>
 <body>
-    <h1>Register</h1>
-    <form id="register-form">
-        <label>Username: <input type="text" name="username" required></label><br>
-        <label>Password: <input type="password" name="password" required></label><br>
-        <label>Email: <input type="email" name="email" required></label><br>
-        <label>Role:
-            <select name="role"><!-- For now option to be member or staff will be a drop down -->
-                <option value="member">Member</option>
-                <option value="staff">Staff</option>
-            </select>
-        </label><br>
-        <button type="submit">Register</button>
-    </form>
+        <h1>Register</h1>
+        <form id="register-form" >
+
+            <div class = "Login">
+                <label class = "LoginBetween">Username: <input type="text" name="username" required></label><br><br>
+                <label>Password: <input type="password" name="password" required></label><br><br>
+                <label>Email: <input type="email" name="email" required></label><br><br>
+                <label class = "LoginBetween">Role:
+                    <select name="role"><!-- For now option to be member or staff will be a drop down -->
+                        <option value="member">Member</option>
+                        <option value="staff">Staff</option>
+                    </select>
+                </label><br><br>
+                <div class = "LoginButton">
+                    <button type="submit">Register</button>
+                </div>
+            </div>
+        </form>
 
     <p id="response"></p>
 

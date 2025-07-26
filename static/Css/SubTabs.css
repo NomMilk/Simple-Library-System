@@ -19,8 +19,16 @@
 
 .Login
 {
-    z-index: 2;
-    position: absolute;
-    right: 30vw;
-    top: 220vh
+    width: 12vw;    
+    margin: auto;
+}
+
+.LoginBetween
+{
+    margin-top: 20px;
+}
+
+.LoginButton
+{
+    text-align: center;
 }

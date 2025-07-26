@@ -1,7 +1,7 @@
 @font-face
 {
     font-family: 'Roboto';
-    src: url('/Roboto.ttf') format('truetype');
+    src: url('/static/fonts/Roboto.ttf') format('truetype');
     font-style: normal;
     font-weight: normal;
 }
@@ -40,7 +40,7 @@ body
     color: var(--black);
 
     background-color: var(--white);
-    font-family: Roboto;
+    font-family: 'Roboto', sans-serif;
 }
 
 img
@@ -51,7 +51,6 @@ img
 input
 {
     border: none;
-    font-family: Roboto;
     font-size: 2vh;
 
     color: var(--black);
@@ -66,8 +65,6 @@ input:focus {
 button
 {
     color: var(--black);
-
-    font-family: Roboto;
 
     background-color: rgba(0, 0, 0, 0);
     border: none;
@@ -94,6 +91,7 @@ th, td
 
 a
 {
+    color:var(--gray);
     text-decoration: none;
 }
 
@@ -101,6 +99,33 @@ h1
 {
     text-align: center;
     margin-top: 2em;
+}
+
+select
+{
+    background-color: var(--white);
+    border-color: var(--gray);
+    border-style: solid;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0; /* Important to remove any default margin */
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+#searchBar {
+    width: 30%;
+    padding: 8px;
+}
+
+.controls {
+    margin-bottom: 1em;
 }
 
 .Colored:hover

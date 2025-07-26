@@ -5,61 +5,55 @@
     <title>Library Book List</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='Css/Global.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='Css/SubTabs.css') }}">
-
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1em;
-        }
-        th, td {
-            border: 1px solid #aaa;
-            padding: 8px;
-            text-align: left;
-        }
-        #searchBar {
-            width: 30%;
-            padding: 8px;
-            margin-top: 1em;
-        }
-        .controls {
-            margin-bottom: 1em;
-        }
-    </style>
 </head>
 <body>
-    <h1>Library Book Inventory</h1>
+    <div class = "Header">
+        <a href="/templates/books.html">
+            <button>Browse Books</button>
+        </a>
+
+        <a href="/templates/Sign_In.html">
+            <button>Sign In</button>
+        </a>
+
+        <a href="/templates/register.html">
+            <button>Register</button>
+        </a>
+    </div>
+    <h1 style="margin-top: 5vh; margin-bottom: 3vh;">Library Book Inventory</h1>
 
     <div class="controls">
-        <input type="text" id="searchBar" placeholder="Search by title or author...">
         
-        <label for="sortSelect">Sort by:</label>
-        <select id="sortSelect">
-            <option value="">-- Select --</option>
-            <option value="0">Title</option>
-            <option value="1">Author </option>
-            <option value="2">Genre</option>
-            <option value="3">ISBN</option>
-            <option value="4">Year</option>
-            <option value="5">In Stock</option>
-            <option value="6">Who Checked</option>
-        </select>
-        <label for="availabilityFilter">Availability:</label>
-        <select id="availabilityFilter">
-            <option value="all">All</option>
-            <option value="in">In Stock</option>
-            <option value="out">Checked Out</option>
-        </select>
+        <div style = "width: 1200px; margin: 0 auto;">
+            <input type="text" id="searchBar" placeholder="Search by title or author...">
+            <label for="sortSelect">Sort by:</label>
+            <select id="sortSelect">
+                <option value="">-- Select --</option>
+                <option value="0">Title</option>
+                <option value="1">Author </option>
+                <option value="2">Genre</option>
+                <option value="3">ISBN</option>
+                <option value="4">Year</option>
+                <option value="5">In Stock</option>
+                <option value="6">Who Checked</option>
+            </select>
+            <label for="availabilityFilter">Availability:</label>
+            <select id="availabilityFilter">
+                <option value="all">All</option>
+                <option value="in">In Stock</option>
+                <option value="out">Checked Out</option>
+            </select>
 
-        <label for="genreFilter">Genre:</label>
-        <select id="genreFilter">
-            <option value="all">All</option>
-            {% for genre in genres %}
-            <option value="{{ genre }}">{{ genre }}</option>
-            {% endfor %}
-        </select>
-        <label for="yearFilter">Year:</label>
-        <input type="number" id="yearFilter" placeholder="Enter year">
+            <label for="genreFilter">Genre:</label>
+            <select id="genreFilter">
+                <option value="all">All</option>
+                {% for genre in genres %}
+                <option value="{{ genre }}">{{ genre }}</option>
+                {% endfor %}
+            </select>
+            <label for="yearFilter">Year:</label>
+            <input type="number" id="yearFilter" placeholder="Enter year">
+        </div>
 
     </div>
 

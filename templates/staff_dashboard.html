@@ -7,7 +7,7 @@
 <body>
     <h1>Welcome, {{ session['username'] }}</h1>
 
-    <h2>📚 Pending Book Requests</h2>
+    <h2>Pending Book Requests</h2>
     <table>
         <tr>
             <th>User</th><th>Title</th><th>ISBN</th><th>Status</th><th>Actions</th>
@@ -23,8 +23,8 @@
                 <form method="POST" action="{{ url_for('handle_request') }}">
                     <input type="hidden" name="isbn" value="{{ r.isbn }}">
                     <input type="hidden" name="username" value="{{ r.username }}">
-                    <button name="action" value="approve">✅ Approve</button>
-                    <button name="action" value="deny">❌ Deny</button>
+                    <button name="action" value="approve">Approve</button>
+                    <button name="action" value="deny">Deny</button>
                 </form>
                 {% else %}
                 {{ r.status }}
@@ -34,7 +34,7 @@
         {% endfor %}
     </table>
 
-    <h2>👤 User Accounts</h2>
+    <h2>User Accounts</h2>
     <table>
         <tr><th>Username</th><th>Email</th><th>Role</th></tr>
         {% for u in users %}
