@@ -116,8 +116,21 @@ function applyFilters() {
         let visible = true;
 
         // Search filter
-        if (!(title.includes(searchText) || author.includes(searchText))) {
-            visible = false;
+        const sortBy = document.getElementById("sortSelect").value;
+        let searchableText = "";
+
+        if (sortBy !== "") {
+            const colIndex = parseInt(sortBy);
+            searchableText = row.cells[colIndex].textContent.toLowerCase();
+            if (!searchableText.includes(searchText)) {
+                visible = false;
+            }
+        } else {
+            const title = row.cells[0].textContent.toLowerCase();
+            const author = row.cells[1].textContent.toLowerCase();
+            if (!(title.includes(searchText) || author.includes(searchText))) {
+                visible = false;
+            }
         }
 
         // Availability filter
@@ -144,13 +157,15 @@ function applyFilters() {
 // document.getElementById("searchBar").addEventListener("input", applyFilters);
 const searchBar = document.getElementById("searchBar");
 const warning = document.getElementById("searchWarning");
-searchBar.addEventListener("input", () => {
-    if (searchBar.value.length > 255) {
-        searchBar.value = searchBar.value.slice(0, 255);
-        warning.style.display = "inline";
-    } else {
-        warning.style.display = "none";
-        applyFilters();
+searchBar.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        if (searchBar.value.length > 255) {
+            searchBar.value = searchBar.value.slice(0, 255);
+            warning.style.display = "inline";
+        } else {
+            warning.style.display = "none";
+            applyFilters();
+        }
     }
 });
 document.getElementById("availabilityFilter").addEventListener("change", applyFilters);
