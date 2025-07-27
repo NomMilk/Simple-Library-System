@@ -25,13 +25,13 @@
     <div class="controls">
         
         <div style = "width: 1200px; margin: 0 auto;">
-            <input type="text" id="searchBar" placeholder="Search by title or author..." maxlength="255">
+            <input type="text" id="searchBar" placeholder="Search by Title or Author..." maxlength="255">
             <span id="searchWarning" style="color: red; display: none;">Search input cannot exceed 255 characters.</span>
             <label for="sortSelect">Sort by:</label>
             <select id="sortSelect">
                 <option value="">-- Select --</option>
                 <option value="0">Title</option>
-                <option value="1">Author </option>
+                <option value="1">Author</option>
                 <option value="2">Genre</option>
                 <option value="3">ISBN</option>
                 <option value="4">Year</option>
@@ -62,7 +62,7 @@
         <thead>
             <tr>
                 <th>Title</th>
-                <th>Author </th>
+                <th>Author</th>
                 <th>Genre</th>
                 <th>ISBN</th>
                 <th>Year</th>
@@ -79,7 +79,7 @@
                     </a>
                 </td>
 
-                <td>{{ book.Author  }}</td>
+                <td>{{ book.Author }}</td>
                 <td>{{ book.Genre }}</td>
                 <td>{{ book.ISBN }}</td>
                 <td>{{ book.Year }}</td>
