@@ -25,7 +25,8 @@
     <div class="controls">
         
         <div style = "width: 1200px; margin: 0 auto;">
-            <input type="text" id="searchBar" placeholder="Search by title or author...">
+            <input type="text" id="searchBar" placeholder="Search by title or author..." maxlength="255">
+            <span id="searchWarning" style="color: red; display: none;">Search input cannot exceed 255 characters.</span>
             <label for="sortSelect">Sort by:</label>
             <select id="sortSelect">
                 <option value="">-- Select --</option>
@@ -140,7 +141,18 @@ function applyFilters() {
 }
 
 // Attach to all filter inputs
-document.getElementById("searchBar").addEventListener("input", applyFilters);
+// document.getElementById("searchBar").addEventListener("input", applyFilters);
+const searchBar = document.getElementById("searchBar");
+const warning = document.getElementById("searchWarning");
+searchBar.addEventListener("input", () => {
+    if (searchBar.value.length > 255) {
+        searchBar.value = searchBar.value.slice(0, 255);
+        warning.style.display = "inline";
+    } else {
+        warning.style.display = "none";
+        applyFilters();
+    }
+});
 document.getElementById("availabilityFilter").addEventListener("change", applyFilters);
 document.getElementById("genreFilter").addEventListener("change", applyFilters);
 document.getElementById("yearFilter").addEventListener("input", applyFilters);
