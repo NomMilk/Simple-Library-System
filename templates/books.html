@@ -25,14 +25,13 @@
     <div class="controls">
         
         <div style = "width: 1200px; margin: 0 auto;">
-            <input type="text" id="searchBar" placeholder="Search by Title or Author..." maxlength="255">
+            <input type="text" id="searchBar" placeholder="Enter search term" maxlength="255" oninput="regexInput()">
+            <span id="inputValidation" style="color: red; display: none;"></span>
             <span id="searchWarning" style="color: red; display: none;">Search input cannot exceed 255 characters.</span>
             <label for="sortSelect">Sort by:</label>
             <select id="sortSelect">
-                <option value="">-- Select --</option>
-                <option value="0">Title</option>
+                <option value="0" selected>Title</option>
                 <option value="1">Author</option>
-                <option value="2">Genre</option>
                 <option value="3">ISBN</option>
                 <option value="4">Year</option>
                 <option value="5">In Stock</option>
@@ -103,7 +102,6 @@ function applyFilters() {
     const searchText = document.getElementById("searchBar").value.toLowerCase();
     const availability = document.getElementById("availabilityFilter").value;
     const genre = document.getElementById("genreFilter").value;
-    const year = document.getElementById("yearFilter").value;
     const rows = document.querySelectorAll("#bookTable tbody tr");
 
     rows.forEach(row => {
@@ -193,10 +191,41 @@ function sortTable(colIndex) {
         }
     });
 
-    // Re-attach sorted rows
     rows.forEach(row => tbody.appendChild(row));
 }
 
+    function regexInput() {
+        const searchInput = document.getElementById("searchBar");
+        const sortBy = document.getElementById("sortSelect").value;
+        const validation = document.getElementById("inputValidation");
+
+        validation.style.display = "none";
+
+        if (sortBy !== "0") {  // Not Title
+            searchInput.value = searchInput.value.replace(/[^a-zA-Z0-9 ]/g, '');
+        }
+
+        if (sortBy === "3") { // ISBN
+            if (!/^\d{0,13}$/.test(searchInput.value)) {
+                validation.textContent = "ISBN only takes a 13-digit numeric code.";
+                validation.style.display = "inline";
+            }
+        }
+
+        if (sortBy === "4") { // Year
+            if (!/^\d{0,4}$/.test(searchInput.value)) {
+                validation.textContent = "Year only accepts a 4-digit number.";
+                validation.style.display = "inline";
+            }
+        }
+
+        if (sortBy === "1") { // Author
+            if (!/^[a-zA-Z ]{0,100}$/.test(searchInput.value)) {
+                validation.textContent = "Author name should only contain letters and spaces.";
+                validation.style.display = "inline";
+            }
+        }
+    }
     </script>
     
 </body>
