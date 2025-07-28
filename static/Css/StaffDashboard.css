@@ -1,0 +1,93 @@
+@font-face
+{
+    font-family: 'Roboto';
+    src: url('/static/fonts/Roboto.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+:root {
+    --black: #27201c;
+    --white: #fdf7d5;
+
+    --light-orange: #f2ce9a;
+    --orange: #e2a25e;
+    --gray: #7e6d59;
+    --brown: #a0563d;
+    --paperYellow: #fff3b0;
+}
+
+body {
+    background-color: var(--white);
+    color: var(--black);
+    font-family: 'Roboto', sans-serif;
+    padding: 2rem;
+    margin: 0;
+    line-height: 1.6;
+}
+
+h1 {
+    background-color: var(--light-orange);
+    color: var(--brown);
+    padding: 1rem;
+}
+
+h2 {
+    color: var(--brown);
+    margin-top: 2rem;
+}
+
+.section {
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-top: 1rem;
+}
+
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    background-color: var(--paperYellow);
+    border: solid var(--brown);
+    border-width: 0px 0px 0px 0.2vw;
+}
+
+th {
+    background-color: var(--paperYellow);
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--black);
+}
+
+td form {
+    display: flex;
+    gap: 8px;
+}
+
+button {
+    background-color: var(--orange);
+    color: var(--black);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--brown);
+    color: var(--white);
+    transform: scale(1.05);
+}
+
+p {
+    margin-top: 1rem;
+    color: var(--gray);
+    font-style: italic;
+}

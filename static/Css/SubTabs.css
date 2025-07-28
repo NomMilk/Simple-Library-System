@@ -58,7 +58,7 @@ button:hover
     border-spacing: 0 15px; /* vertical spacing between rows */
     width: 80%;
     color: var(--black);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: transparent;
 }
 
