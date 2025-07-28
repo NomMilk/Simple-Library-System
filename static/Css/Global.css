@@ -19,6 +19,7 @@
     --orange: #e2a25e;
     --gray: #7e6d59;
     --brown: #a0563d;
+    --paperYellow:#fff3b0; 
 }
 
 html
@@ -106,6 +107,8 @@ select
     background-color: var(--white);
     border-color: var(--gray);
     border-style: solid;
+    border-radius: 0;
+    border: 2px solid;
 }
 
 input::-webkit-outer-spin-button,
