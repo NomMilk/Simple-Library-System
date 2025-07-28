@@ -2,28 +2,43 @@
 <head>
     <title>Register</title>
     <meta charset="UTF-8">
-	<link rel="stylesheet" href="{{ url_for('static', filename='Css/Global.css') }}">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='Css/SubTabs.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='Css/Global.css') }}">
 </head>
 <body>
-        <h1>Register</h1>
-        <form id="register-form" >
+    <div class = "Header">
+        <a href="/books">
+            <button>Browse Books</button>
+        </a>
 
-            <div class = "Login">
-                <label class = "LoginBetween">Username: <input type="text" name="username" required></label><br><br>
-                <label>Password: <input type="password" name="password" required></label><br><br>
-                <label>Email: <input type="email" name="email" required></label><br><br>
-                <label class = "LoginBetween">Role:
-                    <select name="role"><!-- For now option to be member or staff will be a drop down -->
-                        <option value="member">Member</option>
-                        <option value="staff">Staff</option>
-                    </select>
-                </label><br><br>
-                <div class = "LoginButton">
-                    <button type="submit">Register</button>
-                </div>
+        <a href="/login">
+            <button>Sign In</button>
+        </a>
+
+        <a href="/register">
+            <button>Register</button>
+        </a>
+    </div>
+
+    <h1>Register</h1>
+    <form id="register-form" >
+
+        <div class = "Login">
+            <label class = "LoginBetween">Username: <input type="text" name="username" required></label><br><br>
+            <label>Password: <input type="password" name="password" required></label><br><br>
+            <label>Email: <input type="email" name="email" required></label><br><br>
+            <label class = "LoginBetween">Role:
+                <select name="role"><!-- For now option to be member or staff will be a drop down -->
+                    <option value="member">Member</option>
+                    <option value="staff">Staff</option>
+                </select>
+            </label><br><br>
+            <div class = "LoginButton">
+                <button type="submit">Register</button>
             </div>
-        </form>
+        </div>
+    </form>
 
     <p id="response"></p>
 

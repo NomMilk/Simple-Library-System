@@ -3,16 +3,34 @@
     <title>LibraLink - Sign In</title>
     <meta charset="UTF-8">
 
-	<link rel="stylesheet" href="{{ url_for('static', filename='Css/Global.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='Css/Subtabs.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='Css/Global.css') }}">
     <script src="/Scripts/MoveDownWhileScroll.js" defer></script>
 </head>
 <body>
-    <h1>Login</h1>
-    <form id="login-form" method="POST">
-        <label>Username: <input type="text" name="username" required></label><br>
-        <label>Password: <input type="password" name="password" required></label><br>
-        <button type="submit">Login</button>
+    <div class = "Header">
+        <a href="/books">
+            <button>Browse Books</button>
+        </a>
+
+        <a href="/login">
+            <button>Sign In</button>
+        </a>
+
+        <a href="/register">
+            <button>Register</button>
+        </a>
+    </div>
+    <h1>Sign In</h1>
+    <form id="login-form">
+        <div class = "Login">
+            <label class = "LoginBetween">Username: <input type="text" name="username" required></label><br><br>
+            <label>Password: <input type="password" name="password" required></label><br><br>
+            </label><br><br>
+            <div class = "LoginButton">
+                <button type="submit">Login</button>
+            </div>
+        </div>
     </form>
 
     <p id="response"></p>
