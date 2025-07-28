@@ -34,8 +34,8 @@
                 <option value="1">Author</option>
                 <option value="3">ISBN</option>
                 <option value="4">Year</option>
-                <option value="5">In Stock</option>
-                <option value="6">Who Checked</option>
+                <!-- <option value="5">In Stock</option>
+                <option value="6">Who Checked</option> -->
             </select>
             <label for="availabilityFilter">Availability:</label>
             <select id="availabilityFilter">
@@ -51,8 +51,6 @@
                 <option value="{{ genre }}">{{ genre }}</option>
                 {% endfor %}
             </select>
-            <label for="yearFilter">Year:</label>
-            <input type="number" id="yearFilter" placeholder="Enter year">
         </div>
 
     </div>
@@ -108,7 +106,6 @@ function applyFilters() {
         const title = row.cells[0].textContent.toLowerCase();
         const author = row.cells[1].textContent.toLowerCase();
         const bookGenre = row.cells[2].textContent.trim();
-        const bookYear = row.cells[4].textContent.trim();
         const inStock = row.cells[5].textContent.trim().toLowerCase();
 
         let visible = true;
@@ -138,15 +135,6 @@ function applyFilters() {
         // Genre filter
         if (genre !== "all" && bookGenre !== genre) visible = false;
 
-        // Year filter
-        const yearInput = document.getElementById("yearFilter").value.trim();
-        const year = parseInt(yearInput);
-
-        if (yearInput && !isNaN(year)) {
-            if (parseInt(bookYear) !== year) visible = false;
-        }
-
-
         row.style.display = visible ? "" : "none";
     });
 }
@@ -168,7 +156,6 @@ searchBar.addEventListener("keydown", (event) => {
 });
 document.getElementById("availabilityFilter").addEventListener("change", applyFilters);
 document.getElementById("genreFilter").addEventListener("change", applyFilters);
-document.getElementById("yearFilter").addEventListener("input", applyFilters);
 
 function sortTable(colIndex) {
     const tbody = document.querySelector("#bookTable tbody");
@@ -221,7 +208,7 @@ function sortTable(colIndex) {
 
         if (sortBy === "1") { // Author
             if (!/^[a-zA-Z ]{0,100}$/.test(searchInput.value)) {
-                validation.textContent = "Author name should only contain letters and spaces.";
+                validation.textContent = "Author only accepts letters and spaces.";
                 validation.style.display = "inline";
             }
         }
