@@ -3,9 +3,10 @@ from flask_cors import CORS
 import pandas as pd
 import os
 import hashlib
-
+import secrets
 
 app = Flask(__name__)
+app.secret_key = secrets.token_hex(16)
 CORS(app)
 EXCEL_FILE = "users.xlsx"
 
@@ -85,27 +86,36 @@ def login():
     if request.method == "GET":
         return render_template("sign_in.html")
 
-    data = request.get_json() or request.form
     try:
-        df = load_users()
-        hashed = hash_password(data["password"])
+        # Handle both fetch JSON or form data
+        data = request.get_json() or request.form
+        print("Login data received:", data)
 
-        user = df[(df["username"] == data["username"]) & (df["password"] == hashed)]
+        username = data.get("username")
+        password = data.get("password")
+
+        if not username or not password:
+            return "Missing username or password", 400
+
+        df = load_users()
+        hashed = hash_password(password)
+
+        user = df[(df["username"] == username) & (df["password"] == hashed)]
 
         if user.empty:
-            raise ValueError("Invalid username or password.")
+            return "Invalid username or password", 401
 
         row = user.iloc[0]
         session["username"] = row["username"]
         session["role"] = row["role"]
         session["email"] = row["email"]
 
-        # Redirect to home after login
         return redirect(url_for("home"))
-    except ValueError as e:
-        return jsonify({"message": str(e)}), 401
+
     except Exception as e:
-        return jsonify({"message": "Server error", "error": str(e)}), 500
+        import traceback
+        traceback.print_exc()
+        return f"Server error: {e}", 500
 
 #Flask route for book pages
 @app.route("/book/<isbn>")
@@ -180,14 +190,93 @@ def staff_dashboard():
 @app.route("/account")
 def account_page():
     if "username" not in session:
-        return redirect(url_for("register_page"))
-    return render_template("account.html", 
-                           username=session["username"],
+        return redirect(url_for("register"))
+
+    username = session["username"]
+    try:
+        df = pd.read_excel("BookList.xlsx")
+        rented = df[df["Who Checked"] == username]
+        rented_books = rented[["Title", "ISBN", "Expected Return"]].rename(columns={
+            "Title": "title",
+            "ISBN": "isbn",
+            "Expected Return": "expected_return"
+        }).to_dict(orient="records")
+    except:
+        rented_books = []
+
+    return render_template("account.html",
+                           username=username,
                            email=session["email"],
-                           role=session["role"])
+                           role=session["role"],
+                           rented_books=rented_books)
+
 @app.route("/register-page")
 def register_page():
     return render_template("register.html")
+# flask route for changing passwords
+@app.route("/change-password", methods=["POST"])
+def change_password():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    data = request.form
+    current_pw = data.get("current_password")
+    new_pw = data.get("new_password")
+    confirm_pw = data.get("confirm_password")
+
+    if new_pw != confirm_pw:
+        return "Passwords do not match", 400
+
+    df = load_users()
+    hashed_current = hash_password(current_pw)
+    user_idx = df[(df["username"] == session["username"]) & (df["password"] == hashed_current)].index
+
+    if user_idx.empty:
+        return "Current password incorrect", 403
+
+    df.loc[user_idx[0], "password"] = hash_password(new_pw)
+    df.to_excel(EXCEL_FILE, index=False)
+
+    return redirect(url_for("account_page"))
+#flask route for book requests
+@app.route("/handle-request", methods=["POST"])
+def handle_request():
+    isbn = request.form.get("isbn")
+    username = request.form.get("username")
+    action = request.form.get("action")  # 'approve' or 'deny'
+
+    if not isbn or not username or not action:
+        return "Invalid request", 400
+
+    # Load book request sheet
+    req_file = "BookRequests.xlsx"
+    if not os.path.exists(req_file):
+        return "No request file found", 404
+
+    df = pd.read_excel(req_file)
+
+    # Find the request by both ISBN and username
+    idx = df[(df["isbn"].astype(str) == str(isbn)) & (df["username"] == username)].index
+
+    if not idx.empty:
+        status = "Approved" if action == "approve" else "Denied"
+        df.at[idx[0], "status"] = status
+        df.to_excel(req_file, index=False)
+
+        # Update book availability only if approved
+        if status == "Approved":
+            books_df = pd.read_excel("BookList.xlsx")
+            book_idx = books_df[books_df["ISBN"].astype(str) == str(isbn)].index
+
+            if not book_idx.empty:
+                books_df.at[book_idx[0], "In Stock"] = "No"
+                books_df.at[book_idx[0], "Who Checked"] = username
+                books_df.to_excel("BookList.xlsx", index=False)
+
+        return redirect(url_for("staff_dashboard"))
+
+    return "Request not found", 404
+
 
 if __name__ == "__main__":
     init_user_file()

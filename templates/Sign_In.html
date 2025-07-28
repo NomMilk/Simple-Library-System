@@ -17,19 +17,37 @@
 
     <p id="response"></p>
 
-    <script>
-        document.getElementById("login-form").addEventListener("submit", async function (e) {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const payload = Object.fromEntries(formData);
+<script>
+    document.getElementById("login-form").addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const payload = Object.fromEntries(formData);
+
+        try {
             const res = await fetch("http://localhost:5000/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
+                credentials: "include"
             });
+
+            // Check for redirect
+            if (res.redirected) {
+                window.location.href = res.url; // Follow it manually
+                return;
+            }
+
+            // Otherwise, handle response message
             const result = await res.json();
             document.getElementById("response").innerText = result.message;
-        });
+
+        } catch (err) {
+            console.error("Login failed:", err);
+            document.getElementById("response").innerText = "Error logging in.";
+        }
+    });
+</script>
+
     </script>
 </body>
 </html>
