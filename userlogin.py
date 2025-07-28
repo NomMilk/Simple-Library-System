@@ -38,6 +38,11 @@ def add_user(username, password, email, role="member"):
     
     df = pd.concat([df, new_user], ignore_index=True)
     df.to_excel(EXCEL_FILE, index=False)
+#Flask route for the home page
+@app.route("/")
+def home():
+    return render_template("index.html")
+
 #Flask route to handle book excel
 @app.route("/books")
 def show_books():
@@ -52,10 +57,13 @@ def show_books():
         return render_template("books.html", books=books, genres=genres, years=years)
     except Exception as e:
         return f"Error loading books: {str(e)}", 500
-# Flask route to handle POST /register
-@app.route("/register", methods=["POST"])
+# Flask route to handle POST and get /register
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    data = request.get_json()
+    if request.method == "GET":
+        return render_template("register.html")
+
+    data = request.get_json() or request.form
     try:
         add_user(
             username=data["username"],
@@ -63,20 +71,25 @@ def register():
             email=data["email"],
             role=data.get("role", "member")
         )
-        return jsonify({"message": "Account created successfully."}), 201
+        # Redirect to home after successful registration
+        return redirect(url_for("home"))
     except ValueError as e:
         return jsonify({"message": str(e)}), 400
     except Exception as e:
         return jsonify({"message": "Server error", "error": str(e)}), 500
+
     
-#Flask route to handle post /login
-@app.route("/login", methods=["POST"])
+#Flask route to handle post and get /login
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    data = request.get_json()
+    if request.method == "GET":
+        return render_template("sign_in.html")
+
+    data = request.get_json() or request.form
     try:
         df = load_users()
         hashed = hash_password(data["password"])
-        
+
         user = df[(df["username"] == data["username"]) & (df["password"] == hashed)]
 
         if user.empty:
@@ -87,15 +100,13 @@ def login():
         session["role"] = row["role"]
         session["email"] = row["email"]
 
-        return jsonify({
-            "message": f"Login successful. Welcome, {row['username']}!",
-            "role": row["role"]
-        }), 200
-
+        # Redirect to home after login
+        return redirect(url_for("home"))
     except ValueError as e:
         return jsonify({"message": str(e)}), 401
     except Exception as e:
         return jsonify({"message": "Server error", "error": str(e)}), 500
+
 #Flask route for book pages
 @app.route("/book/<isbn>")
 def book_detail(isbn):
@@ -151,8 +162,8 @@ def request_book(isbn):
 #Flask route to staff dashboard
 @app.route("/staff-dashboard")
 def staff_dashboard():
-    if session.get("role") != "staff":
-        return "Access denied", 403
+    #if session.get("role") != "staff":
+       # return "Access denied", 403
 
     # Load user accounts
     users = pd.read_excel("users.xlsx").to_dict(orient="records")
