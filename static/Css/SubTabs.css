@@ -56,7 +56,7 @@ button:hover
 #bookTable {
     border-collapse: separate;
     border-spacing: 0 15px; /* vertical spacing between rows */
-    width: 80%;
+    width: 90%;
     color: var(--black);
     font-family: 'Roboto', sans-serif;
     background-color: transparent;
