@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 image.classList.add('visible');
             }
+            else
+            {
+                image.classList.remove('visible');
+            }
         });
     });
 
