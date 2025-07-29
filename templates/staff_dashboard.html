@@ -72,11 +72,16 @@
             <th>Expected Return</th>
         </tr>
         {% for book in due_books %}
-        <tr>
+        <tr class="{% if book.overdue %}overdue{% endif %}">
             <td>{{ book["Title"] }}</td>
             <td>{{ book["ISBN"] }}</td>
             <td>{{ book["Who Checked"] }}</td>
-            <td>{{ book["Expected Return"] }}</td>
+            <td>
+                {{ book["Expected Return"] }}
+                {% if book.overdue %}
+                <strong style="color: red;">(Overdue)</strong>
+                {% endif %}
+            </td>
             <td>
                 <form method="POST" action="{{ url_for('extend_rental') }}">
                     <input type="hidden" name="isbn" value="{{ book.ISBN }}">
@@ -85,9 +90,10 @@
                 <form method="POST" action="{{ url_for('send_reminder', isbn=book.ISBN, username=book['Who Checked']) }}">
                     <button type="submit" class="Colored">Send Reminder</button>
                 </form>
-            </td>
-        </tr>
-        {% endfor %}
+    </td>
+</tr>
+{% endfor %}
+
     </table>
     {% else %}
     <p>No books are currently checked out.</p>

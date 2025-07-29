@@ -223,7 +223,6 @@ input[type="number"] {
     margin-top: 0.4vw;
 }
 
-<<<<<<< HEAD
 .flash-success {
     color: green;
     background-color: #eaffea;
@@ -245,7 +244,6 @@ input[type="number"] {
     padding: 1em;
     margin: 1em 0;
 }
-=======
 .BrowingImage {
     position: absolute;
     right: 45vw;
@@ -263,4 +261,3 @@ input[type="number"] {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
->>>>>>> 261bdbcbe4f1000eaca0f882e439f6982521c998

@@ -2,20 +2,69 @@
 <html>
 <head>
     <title>{{ book.Title }}</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/Global.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='Css/BookDetails.css') }}">
+    <style>
+        .book-detail-container {
+            max-width: 700px;
+            margin: 5vh auto;
+            padding: 2em;
+            background-color: var(--light-orange);
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .book-detail-container h1 {
+            color: var(--black);
+            text-align: center;
+            margin-bottom: 1em;
+        }
+
+        .book-detail-container p {
+            font-size: 1.1em;
+            margin: 0.5em 0;
+        }
+
+        .book-detail-container button {
+            margin-top: 1.5em;
+            padding: 0.6em 1.2em;
+            font-size: 1em;
+            background-color: var(--orange);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .book-detail-container button:hover {
+            background-color: var(--brown);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2em;
+            text-align: center;
+            width: 100%;
+            color: var(--gray);
+        }
+    </style>
 </head>
 <body>
-    <h1>{{ book.Title }}</h1>
-    <p><strong>Author:</strong> {{ book.Author }}</p>
-    <p><strong>Genre:</strong> {{ book.Genre }}</p>
-    <p><strong>ISBN:</strong> {{ book.ISBN }}</p>
-    <p><strong>Year:</strong> {{ book.Year }}</p>
-    <p><strong>In Stock:</strong> {{ book["In Stock"] }}</p>
-    <p><strong>Who Checked:</strong> {{ book["Who Checked"] }}</p>
-    <form method="POST" action="{{ url_for('request_book', isbn=book.ISBN) }}">
-        <button type="submit">Request This Book</button>
-    </form>
-    <a href="{{ url_for('show_books') }}">← Back to Catalog</a>
+    <div class="book-detail-container">
+        <h1>{{ book.Title }}</h1>
+        <p><strong>Author:</strong> {{ book.Author }}</p>
+        <p><strong>Genre:</strong> {{ book.Genre }}</p>
+        <p><strong>ISBN:</strong> {{ book.ISBN }}</p>
+        <p><strong>Year:</strong> {{ book.Year }}</p>
+        <p><strong>In Stock:</strong> {{ book["In Stock"] }}</p>
 
+        <form method="POST" action="{{ url_for('request_book', isbn=book.ISBN) }}">
+            <button type="submit">Request This Book</button>
+        </form>
+
+        <div class="back-link">
+            <a href="{{ url_for('show_books') }}">← Back to Catalog</a>
+        </div>
+    </div>
 </body>
 </html>

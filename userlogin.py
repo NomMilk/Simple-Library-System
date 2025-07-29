@@ -218,6 +218,8 @@ def request_book(isbn):
         return redirect(url_for("show_books"))
     
 #Flask route to staff dashboard
+from datetime import datetime
+
 @app.route("/staff-dashboard")
 def staff_dashboard():
     if session.get("role") != "staff":
@@ -225,28 +227,43 @@ def staff_dashboard():
 
     users = pd.read_excel("users.xlsx").to_dict(orient="records")
 
-    # Load book requests
+    # Load requests
     try:
         requests_df = pd.read_excel("BookRequests.xlsx")
         requests = requests_df.to_dict(orient="records")
     except:
         requests = []
-
-    # Load book list and filter checked-out books
+    #tag overdue books
     try:
         books_df = pd.read_excel("BookList.xlsx")
         books_df["In Stock"] = books_df["In Stock"].astype(str).str.strip().str.lower()
 
         due_df = books_df[books_df["In Stock"] == "no"]
-        due_books = due_df[["Title", "ISBN", "Who Checked", "Expected Return"]].to_dict(orient="records")
+        overdue_books = []
+
+        for _, row in due_df.iterrows():
+            due_date_str = str(row["Expected Return"]).split()[0]  # removes time if present
+            try:
+                due_date = datetime.strptime(due_date_str, "%Y-%m-%d")
+                overdue = due_date < datetime.today()
+            except:
+                overdue = False
+
+            overdue_books.append({
+                "Title": row["Title"],
+                "ISBN": row["ISBN"],
+                "Who Checked": row["Who Checked"],
+                "Expected Return": due_date_str,
+                "overdue": overdue
+            })
     except Exception as e:
         print("Book loading error:", e)
-        due_books = []
+        overdue_books = []
 
     return render_template("staff_dashboard.html",
                            users=users,
                            requests=requests,
-                           due_books=due_books)
+                           due_books=overdue_books)
 
 
 #Flask route to account page

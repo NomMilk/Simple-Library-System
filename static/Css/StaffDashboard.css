@@ -95,3 +95,6 @@ p {
     color: var(--gray);
     font-style: italic;
 }
+tr.overdue {
+    background-color: #ffd6d6;
+}
