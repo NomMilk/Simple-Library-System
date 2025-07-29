@@ -5,6 +5,7 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='Css/SubTabs.css') }}">
 
         <script src="{{ url_for('static', filename='Scripts/MoveDownWhileScroll.js') }}" defer></script>
+        <script src="{{ url_for('static', filename='Scripts/EnterViewPort.js') }}" defer></script>
     </head>
     <body>
         <div class="Header">
@@ -56,6 +57,7 @@
         <div class = "BrowseBooks">
             <h1 class = "SmallTitle">Browse Books</h1>
             <h2>Searching for books is as simple as being from a click away!</h2>
+            <img class = "BrowingImage" src="{{ url_for('static', filename='Browsing.jpg') }}">
         </div>
     </body>
 </html>

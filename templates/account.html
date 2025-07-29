@@ -7,18 +7,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='Css/SubTabs.css') }}">
     <style>
         body {
-            margin: 2rem;
             background-color: var(--white);
             color: var(--black);
             font-family: 'Roboto', sans-serif;
         }
 
         .section {
-            background-color: var(--light-orange);
+            background-color: var(--paperYellow);
             border-left: 6px solid var(--orange);
             padding: 1rem 1.5rem;
-            margin-bottom: 2rem;
-            border-radius: 6px;
+            margin: 2rem;
             box-shadow: 0 2px 8px rgba(39, 32, 28, 0.1);
         }
 
@@ -54,19 +52,6 @@
             padding: 0.5rem;
             width: 100%;
             margin-bottom: 0.5rem;
-        }
-
-        button {
-            background-color: var(--brown);
-            color: white;
-            border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: var(--gray);
         }
     </style>
 </head>
@@ -105,7 +90,7 @@
     </div>
 
     <div class="section">
-        <h2>📚 Your Rented Books</h2>
+        <h2>Your Rented Books</h2>
         {% if rented_books %}
         <table>
             <tr>
@@ -135,7 +120,7 @@
 
 
     <div class="section">
-        <h2>🔐 Change Your Password</h2>
+        <h2>Change Your Password</h2>
         <form method="POST" action="{{ url_for('change_password') }}">
             <input type="password" name="current_password" placeholder="Current Password" required>
             <input type="password" name="new_password" placeholder="New Password" required>
@@ -145,4 +130,3 @@
     </div>
 </body>
 </html>
-wwwww
