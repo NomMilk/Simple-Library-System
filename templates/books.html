@@ -11,7 +11,6 @@
         <a href="/books">
             <button>Browse Books</button>
         </a>
-
         {% if session['username'] %}
             <a href="/account">
                 <button>Account</button>
@@ -28,6 +27,15 @@
             </a>
         {% endif %}
     </div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="flash-{{ category|lower if category in ['success', 'warning', 'error'] else 'error' }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
     <h1 style="margin-top: 0vh; margin-bottom: 7vh; padding-left: 65%">Library Book Inventory</h1>
 
