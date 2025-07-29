@@ -7,6 +7,7 @@ import secrets
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
+app.jinja_env.globals.update(session=session)
 CORS(app)
 EXCEL_FILE = "users.xlsx"
 
@@ -43,6 +44,11 @@ def add_user(username, password, email, role="member"):
 @app.route("/")
 def home():
     return render_template("index.html")
+#flask route for logging out
+@app.route("/logout", methods=["POST"])
+def logout():
+    session.clear()
+    return redirect(url_for("home"))
 
 #Flask route to handle book excel
 @app.route("/books")
@@ -276,6 +282,29 @@ def handle_request():
         return redirect(url_for("staff_dashboard"))
 
     return "Request not found", 404
+#flask route for returning books
+@app.route("/return-book", methods=["POST"])
+def return_book():
+    if "username" not in session:
+        return redirect(url_for("register_page"))
+
+    isbn = request.form.get("isbn")
+    username = session["username"]
+
+    try:
+        df = pd.read_excel("BookList.xlsx")
+        book_idx = df[(df["ISBN"].astype(str) == str(isbn)) & (df["Who Checked"] == username)].index
+
+        if not book_idx.empty:
+            df.at[book_idx[0], "In Stock"] = "Yes"
+            df.at[book_idx[0], "Who Checked"] = ""
+            df.to_excel("BookList.xlsx", index=False)
+            return redirect(url_for("account_page"))
+        else:
+            return "Book not found or not checked out by you", 400
+
+    except Exception as e:
+        return f"Error returning book: {str(e)}", 500
 
 
 if __name__ == "__main__":

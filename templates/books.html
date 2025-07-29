@@ -7,20 +7,28 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='Css/SubTabs.css') }}">
 </head>
 <body>
-    <div class = "Header">
-        <div class = "HeaderBackground"></div>
-        <a href="/templates/books.html">
+    <div class="Header">
+        <a href="/books">
             <button>Browse Books</button>
         </a>
 
-        <a href="/login">
-            <button>Sign In</button>
-        </a>
-
-        <a href="/register">
-            <button>Register</button>
-        </a>
+        {% if session['username'] %}
+            <a href="/account">
+                <button>Account</button>
+            </a>
+            <form action="/logout" method="POST" style="display:inline;">
+                <button type="submit">Sign Out</button>
+            </form>
+        {% else %}
+            <a href="/login">
+                <button>Sign In</button>
+            </a>
+            <a href="/register">
+                <button>Register</button>
+            </a>
+        {% endif %}
     </div>
+
     <h1 style="margin-top: 0vh; margin-bottom: 7vh; padding-left: 65%">Library Book Inventory</h1>
 
     <div class="controls">
@@ -65,7 +73,9 @@
                 <th>ISBN</th>
                 <th>Year</th>
                 <th>In Stock</th>
-                <th>Who Checked</th>
+                {% if session['role'] == 'staff' %}
+                    <th>Who Checked</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -82,7 +92,10 @@
                 <td>{{ book.ISBN }}</td>
                 <td>{{ book.Year }}</td>
                 <td>{{ book["In Stock"] }}</td>
-                <td>{{ book["Who Checked"] }}</td>
+                {% if session['role'] == 'staff' %}
+                    <td>{{ book["Who Checked"] }}</td>
+                {% endif %}
+
             </tr>
             {% endfor %}
         </tbody>

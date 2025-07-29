@@ -71,6 +71,27 @@
     </style>
 </head>
 <body>
+    <div class="Header">
+        <a href="/books">
+            <button>Browse Books</button>
+        </a>
+
+        {% if session['username'] %}
+            <a href="/account">
+                <button>Account</button>
+            </a>
+            <form action="/logout" method="POST" style="display:inline;">
+                <button type="submit">Sign Out</button>
+            </form>
+        {% else %}
+            <a href="/login">
+                <button>Sign In</button>
+            </a>
+            <a href="/register">
+                <button>Register</button>
+            </a>
+        {% endif %}
+    </div>
     <h1>Welcome, {{ username }}!</h1>
 
     <div class="section">
@@ -91,12 +112,19 @@
                 <th>Title</th>
                 <th>ISBN</th>
                 <th>Expected Return</th>
+                <th>Return</th>
             </tr>
             {% for book in rented_books %}
             <tr>
                 <td>{{ book.title }}</td>
                 <td>{{ book.isbn }}</td>
                 <td>{{ book.expected_return }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('return_book') }}">
+                        <input type="hidden" name="isbn" value="{{ book.isbn }}">
+                        <button type="submit">Return</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </table>
@@ -104,6 +132,7 @@
         <p>You haven’t checked out any books yet.</p>
         {% endif %}
     </div>
+
 
     <div class="section">
         <h2>🔐 Change Your Password</h2>
@@ -116,3 +145,4 @@
     </div>
 </body>
 </html>
+wwwww

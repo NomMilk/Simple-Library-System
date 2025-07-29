@@ -7,19 +7,26 @@
         <script src="{{ url_for('static', filename='Scripts/MoveDownWhileScroll.js') }}" defer></script>
     </head>
     <body>
-        <div class = "Header">
+        <div class="Header">
             <a href="/books">
                 <button>Browse Books</button>
             </a>
 
-            <a href="/login">
-                <button>Sign In</button>
-            </a>
-
-            <a href="/register">
-                <button>Register</button>
-            </a>
-
+            {% if session['username'] %}
+                <a href="/account">
+                <button>Account</button>
+                </a>
+                <form action="/logout" method="POST" style="display:inline;">
+                    <button type="submit">Sign Out</button>
+                </form>
+            {% else %}
+                <a href="/login">
+                    <button>Sign In</button>
+                </a>
+                <a href="/register">
+                    <button>Register</button>
+                </a>
+            {% endif %}
             <script>
             function scrollDown(_scroll){
                 const scrollAmount = window.innerHeight * _scroll;

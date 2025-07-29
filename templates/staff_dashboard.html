@@ -5,6 +5,26 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='Css/StaffDashboard.css') }}">
 </head>
 <body>
+    <div class = "Header">
+            <a href="/books">
+                <button>Browse Books</button>
+            </a>
+
+            <a href="/account">
+                <button>Account</button>
+            </a>
+
+            <script>
+            function scrollDown(_scroll){
+                const scrollAmount = window.innerHeight * _scroll;
+                window.scrollBy({
+                    top: scrollAmount,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            }
+        </script>
+    </div>
     <h1>Welcome, {{ session['username'] }} (Staff Dashboard)</h1>
 
     <div class="section">
